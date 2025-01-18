@@ -1,0 +1,40 @@
+name: vprofile actions
+on: workflow_dispatch
+env:
+  AWS_REGION: eu-west-2
+  ECR_REPOSITORY: vprofileapp
+  EKS_CLUSTER: vprofile-eks
+
+jobs:
+  Testing:
+     runs-on: ubuntu-latest
+     steps:
+      - name: Code checkout
+        uses: actions/checkout@4
+      
+      - name: Maven Test
+        run: mvn test
+
+      - name: Checkstyle
+        run: mvn checkstyle:checkstyle
+
+      - name: Setup Java 11
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '11'
+
+      - name: Setuo Sonar scanner
+        uses: warchant/setup-sonar-scanner@v7
+
+      - name: SonarQube apiVersion
+        run: sonar-scanner
+          -Dsonar.host.url=${{ secrets.SONAR_URL }}
+          -Dsonor.log=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+          -Dsonar.sources=src/
+          -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ 
+          -Dsonar.junit.reportPaths=target/surefire-reports/ 
+          -Dsonar.jacoco.reportPaths=target/jacoco.exec 
+          -Dsonar.checkstyle.reportPaths=target/checkstyle-result.xml 
