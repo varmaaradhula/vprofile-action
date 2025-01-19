@@ -29,10 +29,10 @@ jobs:
 
       - name: SonarQube scan
         run: sonar-scanner
-          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
-          -Dsonor.login=${{ secrets.SONAR_TOKEN }}
-          -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+          -Dsonar.host.url=${{secrets.SONAR_HOST_URL}}
+          -Dsonor.login=${{secrets.SONAR_TOKEN}}
+          -Dsonar.organization=${{secrets.SONAR_ORGANIZATION}}
+          -Dsonar.projectKey=${{secrets.SONAR_PROJECT_KEY}}
           -Dsonar.sources=src/
           -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ 
           -Dsonar.junit.reportPaths=target/surefire-reports/ 
@@ -44,6 +44,6 @@ jobs:
         uses: sonarsource/sonarqube-quality-gate-action@master
         timeout-minutes: 5
         env:
-           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+           SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+           SONAR_HOST_URL: ${{secrets.SONAR_HOST_URL}}
      
