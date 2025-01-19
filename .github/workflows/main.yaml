@@ -30,7 +30,7 @@ jobs:
       - name: SonarQube scan
         run: sonar-scanner -X
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
-          -Dsonor.login=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
           -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
           -Dsonar.sources=src/
