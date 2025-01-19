@@ -24,13 +24,13 @@ jobs:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '11'
 
-      - name: Setuo Sonar scanner
+      - name: Setup Sonar scanner
         uses: warchant/setup-sonar-scanner@v7
 
-      - name: SonarQube apiVersion
+      - name: SonarQube scan
         run: sonar-scanner
           -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }}
-          -Dsonor.log=${{ secrets.SONAR_TOKEN }}
+          -Dsonor.login=${{ secrets.SONAR_TOKEN }}
           -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
           -Dsonar.sources=src/
@@ -39,8 +39,9 @@ jobs:
           -Dsonar.jacoco.reportPaths=target/jacoco.exec 
           -Dsonar.checkstyle.reportPaths=target/checkstyle-result.xml
 
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-quality-gate-action@master
+      - name: SonarQube Quality Gate check
+        id: sonarqube-quality-gate-check
+        uses: sonarsource/sonarqube-quality-gate-action@master
         timeout-minutes: 5
         env:
            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
