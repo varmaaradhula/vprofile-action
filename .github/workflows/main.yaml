@@ -91,10 +91,7 @@ jobs:
              echo "Secret 'regcred' already exists. Skipping creation."
            else 
              echo "Creating secret 'regcred'."
-             kubectl create secret docker-registry regcred \
-                --docker-server=${{ secrets.REGISTRY }} \
-                --docker-username=AWS \
-                --docker-password=$(aws ecr get-login-password)
+             kubectl create secret docker-registry regcred --docker-server=${{ secrets.REGISTRY }} --docker-username=AWS --docker-password=$(aws ecr get-login-password)
            fi
          #run: kubectl create secret docker-registry regcred --docker-server=${{ secrets.REGISTRY }} --docker-username=AWS --docker-password=$(aws ecr get-login-password)
 
