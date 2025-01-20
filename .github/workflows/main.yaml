@@ -86,7 +86,7 @@ jobs:
          run: aws eks update-kubeconfig --region ${{ env.AWS_REGION }} --name ${{ env.EKS_CLUSTER }}
 
        - name: Login to ECR
-         run:
+         run: |
            if kubectl get secret regcred > /dev/null 2>&1; then 
              echo "Secret 'regcred' already exists. Skipping creation."
            else 
